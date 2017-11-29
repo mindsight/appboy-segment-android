@@ -22,14 +22,14 @@ apply plugin: 'checkstyle'
 apply plugin: 'com.f2prateek.checkstyle'
 
 android {
-  compileSdkVersion 23
+  compileSdkVersion 26
   buildToolsVersion '26.0.2'
 
   defaultConfig {
     // Segment.io supports down to api 14:  https://segment.com/docs/libraries/android/
     minSdkVersion 14
-    targetSdkVersion 23
-    compileSdkVersion 23
+    targetSdkVersion 26
+    compileSdkVersion 26
   }
 
   compileOptions {
