@@ -203,14 +203,20 @@ public class AppboyIntegration extends Integration<Appboy> {
     }
     Properties properties = track.properties();
     if (event.equals("Install Attributed")) {
-      Properties campaignProps = (Properties) properties.get("campaign");
-      if (campaignProps != null) {
-        mAppboy.getCurrentUser().setAttributionData(new AttributionData(
-            campaignProps.getString("source"),
-            campaignProps.getString("name"),
-            campaignProps.getString("ad_group"),
-            campaignProps.getString("ad_creative")));
-      }
+       /* [dchung, 29 Nov 2017]: campaign info may arrive as a String, causing a crash.
+          We don't think HBO uses Appboy to track attribution anyway, so skip it if it's not Properties
+        */
+        if (properties.get("campaign") instanceof Properties)
+        {
+          Properties campaignProps = (Properties) properties.get("campaign");
+          if (campaignProps != null) {
+            mAppboy.getCurrentUser().setAttributionData(new AttributionData(
+                campaignProps.getString("source"),
+                campaignProps.getString("name"),
+                campaignProps.getString("ad_group"),
+                campaignProps.getString("ad_creative")));
+          } 
+        }
       return;
     }
     if (properties == null || properties.size() == 0) {
